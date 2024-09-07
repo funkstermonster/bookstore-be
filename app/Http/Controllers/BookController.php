@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
+use App\Exceptions\BookNotFoundException;
+use App\Exceptions\DuplicateIsbnException;
 
 class BookController extends Controller
 {
@@ -31,47 +34,71 @@ class BookController extends Controller
             'on_store' => 'required|numeric',
         ]);
 
-        $book = Book::create($validatedData);
-
-        return response()->json($book, 201);
+        try {
+            $book = Book::create($validatedData);
+            return response()->json($book, 201);
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23505') {
+                throw new DuplicateIsbnException();
+            }
+            throw $e;
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show($id)
     {
+        $book = Book::find($id);
+        if (!$book) {
+            throw new BookNotFoundException();
+        }
         return response()->json($book);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'author' => 'sometimes|string|max:255',
             'title' => 'sometimes|string|max:255',
             'publish_date' => 'sometimes|date',
-            'isbn' => 'sometimes|string|max:13|unique:books,isbn,' . $book->id,
+            'isbn' => 'sometimes|string|max:13|unique:books,isbn,' . $id,
             'summary' => 'sometimes|string',
             'price' => 'sometimes|numeric',
             'on_store' => 'sometimes|numeric',
         ]);
 
-        $book->update($validatedData);
+        $book = Book::find($id);
+        if (!$book) {
+            throw new BookNotFoundException();
+        }
 
-        return response()->json($book);
+        try {
+            $book->update($validatedData);
+            return response()->json($book);
+        } catch (QueryException $e) {
+            if ($e->getCode() === '23505') {
+                throw new DuplicateIsbnException();
+            }
+            throw $e;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        // Delete the book
-        $book->delete();
+        $book = Book::find($id);
+        if (!$book) {
+            throw new BookNotFoundException();
+        }
 
+        $book->delete();
         return response()->json(null, 204);
     }
 }
