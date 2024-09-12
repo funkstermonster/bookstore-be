@@ -14,11 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-
-        // Path to your JSON file
+        if(env('SKIP_MIGRATION') == 'true') {
+            return;
+        }
         $jsonFilePath = database_path('data/books.json');
 
-        // Parse and insert data from JSON
         if (file_exists($jsonFilePath)) {
             $this->seedFromJSON($jsonFilePath);
         }
