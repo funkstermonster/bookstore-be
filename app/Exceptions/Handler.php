@@ -4,7 +4,6 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
@@ -25,10 +24,6 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
-
         $this->renderable(function (Throwable $e) {
             if ($e instanceof BookNotFoundException) {
                 return response()->json(['error' => $e->getMessage()], Response::HTTP_NOT_FOUND);
