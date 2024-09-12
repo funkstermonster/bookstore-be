@@ -19,11 +19,11 @@ This project is the backend API for a bookstore application built with Laravel. 
    Generate a unique application key for your project using the Laravel command.
 
 5. **Create the Database**
-Run the custom Artisan command to create the bookstore database:
+Run the custom Artisan command to create the bookstore database:\
 `php artisan db:create-bookstore`
 
 6. **Run Migrations**
-Apply the database migrations to create the required tables in the bookstore and populate in the database:
+Apply the database migrations to create the required tables in the bookstore and populate in the database:\
 `php artisan migrate`
 
 ## Database Details
