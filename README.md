@@ -1,66 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Bookstore Backend API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+This project is the backend API for a bookstore application built with Laravel. It provides a RESTful API for managing book records and is distributed as a ZIP file.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Setup Instructions
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Extract the ZIP File**  
+   Unzip the provided file to your desired location.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. **Install Dependencies**  
+   Navigate to the project directory and install the necessary PHP dependencies using Composer.
 
-## Learning Laravel
+3. **Configure the Environment**  
+   Copy the `.env.example` file to `.env`. Update the `.env` file with your PostgreSQL database credentials, including host, port, database name, username, and password.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. **Generate Application Key**  
+   Generate a unique application key for your project using the Laravel command.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5. **Run Migrations**  
+   Apply the database migrations to create the required tables in your PostgreSQL database.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Database Details
 
-## Laravel Sponsors
+The application uses PostgreSQL as its database. The main table, `books`, includes the following fields:
+- `author`: The author of the book.
+- `title`: The title of the book.
+- `publish_date`: The date when the book was published.
+- `isbn`: The unique ISBN of the book.
+- `summary`: A brief summary of the book.
+- `price`: The price of the book.
+- `on_store`: The quantity of the book available in the store.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Model Factories
 
-### Premium Partners
+The `BookFactory` is used to generate sample data for testing. It defines how book attributes are generated, such as author names, titles, publication dates, ISBNs, summaries, prices, and availability.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## API Endpoints
 
-## Contributing
+The API includes the following endpoints:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **List Books**: Retrieve a list of all books in the database.
+- **Create Book**: Add a new book by providing details such as author, title, publish date, ISBN, summary, price, and availability.
+- **View Book**: Get detailed information about a specific book using its ID.
+- **Update Book**: Modify the details of an existing book using its ID. This includes updating attributes and handling duplicate ISBNs.
+- **Delete Book**: Remove a book from the database using its ID, with error handling for cases where the book is not found.
 
-## Code of Conduct
+## Models
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The `Book` model represents the structure of book records in the database. It includes attributes such as author, title, publish date, ISBN, summary, price, and availability.
 
-## Security Vulnerabilities
+## Testing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Feature tests are provided to verify the functionality of the API endpoints. Tests cover scenarios such as listing all books, creating new books (including handling duplicate ISBNs), viewing specific books, updating book details, and deleting books. These tests ensure that the API operates correctly and handles errors appropriately.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
