@@ -6,7 +6,7 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use App\Exceptions\BookNotFoundException;
-use App\Exceptions\DuplicateIsbnException;
+use App\Exceptions\DuplicateEntryException;
 
 class BookController extends Controller
 {
@@ -39,7 +39,7 @@ class BookController extends Controller
             return response()->json($book, 201);
         } catch (QueryException $e) {
             if ($e->getCode() === '23505') {
-                throw new DuplicateIsbnException();
+                throw new DuplicateEntryException();
             }
             throw $e;
         }
@@ -82,7 +82,7 @@ class BookController extends Controller
             return response()->json($book);
         } catch (QueryException $e) {
             if ($e->getCode() === '23505') {
-                throw new DuplicateIsbnException();
+                throw new DuplicateEntryException();
             }
             throw $e;
         }
